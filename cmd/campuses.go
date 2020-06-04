@@ -16,15 +16,22 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"github.com/spf13/cobra"
-	"reflect"
+	"time"
 )
 
 type Language struct {
-	Id			uint
-	Name		string
-	Identifier	string
+	Id			uint `csv:"Lang_id"`
+	Name		string `csv:"Lang_name"`
+	Identifier	string `csv:"Lang_code"`
+}
+
+type Endpoint struct {
+	Id uint `csv:"Endpoint_id"`
+	Url string `csv:"Endpoint_url"`
+	Description string `csv:"Endpoint_description"`
+	CreatedAt *time.Time `csv:"Endpoint_created_at" json:"created_at"`
+	UpdatedAt *time.Time `csv:"Endpoint_updated_at" json:"updated_at"`
 }
 
 type Campus struct {
@@ -42,7 +49,7 @@ type Campus struct {
 	Facebook string `json:"facebook"`
 	Twitter string `json:"twitter"`
 	Active bool `json:"active"`
-	Endpoint string `json:"endpoint"`
+	Endpoint Endpoint `json:"endpoint"`
 }
 
 // campusesCmd represents the campuses command
@@ -52,32 +59,6 @@ var campusesCmd = &cobra.Command{
 	//Run: func(cmd *cobra.Command, args []string) {
 	//	fmt.Println("campuses called")
 	//},
-}
-
-func CampusNormalizer(campus Campus) map[string]string {
-	var normalizedCampus = make(map[string]string)
-
-	fields := reflect.Indirect(reflect.ValueOf(campus))
-
-	for i:= 0; i < fields.NumField(); i++ {
-		var key = fields.Type().Field(i).Name
-		var val string
-		fieldType := fields.Field(i).Type().Name()
-		switch fieldType {
-			case "uint":
-				val = fmt.Sprintf("%d", fields.Field(i).Interface())
-			case "bool":
-				val = fmt.Sprintf("%t", fields.Field(i).Interface())
-			case "Language":
-				continue
-			default:
-				val = fmt.Sprintf("%s", fields.Field(i).Interface())
-		}
-		normalizedCampus[key] = val
-	}
-	// TODO: normalize language
-
-	return normalizedCampus
 }
 
 func init() {

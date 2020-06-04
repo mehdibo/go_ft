@@ -26,7 +26,7 @@ import (
 )
 
 var cfgFile string
-type Normalizer func(class interface{}) map[string]string
+var outputFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -55,6 +55,7 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "Config file (default is $HOME/.go_ft.yaml)")
+	rootCmd.PersistentFlags().StringVar(&outputFile, "file", "results", "Where to store output")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -85,10 +86,14 @@ func initConfig() {
 
 	viper.AutomaticEnv() // read in environment variables that match
 
+	err := viper.ReadInConfig()
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "There was an error reading config file: \n%s\n", err)
+		os.Exit(1)
 	}
+	fmt.Println("Using config file:", viper.ConfigFileUsed())
+
 	for _, config := range requiredConfig {
 		if viper.Get(config) == nil {
 			fmt.Println("'" + config + "' was not found in the config file but it is required.")

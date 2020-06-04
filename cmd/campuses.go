@@ -16,9 +16,7 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"github.com/spf13/cobra"
-	"reflect"
 	"time"
 )
 
@@ -61,32 +59,6 @@ var campusesCmd = &cobra.Command{
 	//Run: func(cmd *cobra.Command, args []string) {
 	//	fmt.Println("campuses called")
 	//},
-}
-
-func CampusNormalizer(campus Campus) map[string]string {
-	var normalizedCampus = make(map[string]string)
-
-	fields := reflect.Indirect(reflect.ValueOf(campus))
-
-	for i:= 0; i < fields.NumField(); i++ {
-		var key = fields.Type().Field(i).Name
-		var val string
-		fieldType := fields.Field(i).Type().Name()
-		switch fieldType {
-			case "uint":
-				val = fmt.Sprintf("%d", fields.Field(i).Interface())
-			case "bool":
-				val = fmt.Sprintf("%t", fields.Field(i).Interface())
-			case "Language":
-				continue
-			default:
-				val = fmt.Sprintf("%s", fields.Field(i).Interface())
-		}
-		normalizedCampus[key] = val
-	}
-	// TODO: normalize language
-
-	return normalizedCampus
 }
 
 func init() {

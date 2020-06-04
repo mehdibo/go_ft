@@ -19,12 +19,21 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"reflect"
+	"time"
 )
 
 type Language struct {
 	Id			uint `csv:"Lang_id"`
 	Name		string `csv:"Lang_name"`
 	Identifier	string `csv:"Lang_code"`
+}
+
+type Endpoint struct {
+	Id uint `csv:"Endpoint_id"`
+	Url string `csv:"Endpoint_url"`
+	Description string `csv:"Endpoint_description"`
+	CreatedAt *time.Time `csv:"Endpoint_created_at" json:"created_at"`
+	UpdatedAt *time.Time `csv:"Endpoint_updated_at" json:"updated_at"`
 }
 
 type Campus struct {
@@ -42,7 +51,7 @@ type Campus struct {
 	Facebook string `json:"facebook"`
 	Twitter string `json:"twitter"`
 	Active bool `json:"active"`
-	Endpoint string `json:"endpoint"`
+	Endpoint Endpoint `json:"endpoint"`
 }
 
 // campusesCmd represents the campuses command

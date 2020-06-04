@@ -31,7 +31,7 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "go_ft",
 	Short: "Bunch of tools to use the 42 API",
-	Long: `With this tool you can easily fetch and send data from the 42 API with an impressive speed.`,
+	Long: `With this tool you can easily fetch and send data from the 42 API.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	//	Run: func(cmd *cobra.Command, args []string) { },
@@ -53,15 +53,19 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.go_ft.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "Config file (default is $HOME/.go_ft.yaml)")
 }
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+	requiredConfig := []string{
+		"client_id",
+		"client_secret",
+		"scopes"}
+
+	viper.SetDefault("token_endpoint", "https://api.intra.42.fr/oauth/token")
+	viper.SetDefault("api_endpoint", "https://api.intra.42.fr/v2")
+
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
@@ -83,5 +87,11 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	}
+	for _, config := range requiredConfig {
+		if viper.Get(config) == nil {
+			fmt.Println("'" + config + "' was not found in the config file but it is required.")
+			os.Exit(1)
+		}
 	}
 }

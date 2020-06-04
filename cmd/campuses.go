@@ -22,9 +22,9 @@ import (
 )
 
 type Language struct {
-	Id			uint
-	Name		string
-	Identifier	string
+	Id			uint `csv:"Lang_id"`
+	Name		string `csv:"Lang_name"`
+	Identifier	string `csv:"Lang_code"`
 }
 
 type Campus struct {

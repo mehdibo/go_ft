@@ -26,6 +26,7 @@ import (
 )
 
 var cfgFile string
+type Normalizer func(class interface{}) map[string]string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{

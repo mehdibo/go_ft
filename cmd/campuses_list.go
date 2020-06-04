@@ -28,7 +28,7 @@ import (
 // listCmd represents the list command
 var campusesListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List all campuses",
+	Short: "List all campuses and write them to a results.csv files",
 	Run: func(cmd *cobra.Command, args []string) {
 		// Create an authenticated http client
 		client := auth.GetOauthClient(viper.GetViper())
@@ -39,6 +39,9 @@ var campusesListCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
+		/**
+		 * TODO: better organize serializers and normalizers to add possibility for other formats and options
+		 */
 		respBody := helpers.GetRespBody(resp)
 
 		var campuses []Campus

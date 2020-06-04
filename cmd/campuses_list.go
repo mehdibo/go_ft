@@ -41,9 +41,6 @@ var campusesListCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		/**
-		 * TODO: better organize serializers and normalizers to add possibility for other formats and options
-		 */
 		respBody := helpers.GetRespBody(resp)
 
 		var campuses []Campus

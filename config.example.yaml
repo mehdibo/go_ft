@@ -4,5 +4,5 @@ scopes: [
   "scope1",
   "scope2",
 ]
-#  token_endpoint: # Defaults to https://api.intra.42.fr/oauth/token
-#  api_endpoint: # Defaults to https://api.intra.42.fr/v2
+#token_endpoint: # Defaults to https://api.intra.42.fr/oauth/token
+#api_endpoint: # Defaults to https://api.intra.42.fr/v2

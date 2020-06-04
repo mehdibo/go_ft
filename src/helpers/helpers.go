@@ -1,7 +1,6 @@
 package helpers
 
 import (
-	"encoding/csv"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -30,19 +29,4 @@ func GetRespBody(resp *http.Response) []byte {
 		os.Exit(1)
 	}
 	return respBody
-}
-
-func CsvWriter(line []string)  {
-	file, err := os.OpenFile("results.csv", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "There was an error creating results.csv file")
-		os.Exit(1)
-	}
-
-	defer file.Close()
-
-	csvWriter := csv.NewWriter(file)
-	defer csvWriter.Flush()
-
-	csvWriter.Write(line)
 }

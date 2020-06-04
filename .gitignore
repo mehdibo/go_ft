@@ -8,6 +8,7 @@
 *.dll
 *.so
 *.dylib
+go_ft
 
 # Test binary, built with `go test -c`
 *.test
@@ -19,7 +20,8 @@
 /vendor/
 /Godeps/
 
-### Go modules
-go.sum
-
 # End of https://www.toptal.com/developers/gitignore/api/go
+
+### Manual ignores
+go.sum
+*.csv

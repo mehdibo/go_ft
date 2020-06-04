@@ -85,10 +85,14 @@ func initConfig() {
 
 	viper.AutomaticEnv() // read in environment variables that match
 
+	err := viper.ReadInConfig()
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "There was an error reading config file: \n%s\n", err)
+		os.Exit(1)
 	}
+	fmt.Println("Using config file:", viper.ConfigFileUsed())
+
 	for _, config := range requiredConfig {
 		if viper.Get(config) == nil {
 			fmt.Println("'" + config + "' was not found in the config file but it is required.")

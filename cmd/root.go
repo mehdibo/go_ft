@@ -32,9 +32,6 @@ var rootCmd = &cobra.Command{
 	Use:   "go_ft",
 	Short: "Bunch of tools to use the 42 API",
 	Long: `With this tool you can easily fetch and send data from the 42 API.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

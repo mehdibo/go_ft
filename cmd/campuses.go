@@ -56,9 +56,6 @@ type Campus struct {
 var campusesCmd = &cobra.Command{
 	Use:   "campuses",
 	Short: "Interact with the campus entity",
-	//Run: func(cmd *cobra.Command, args []string) {
-	//	fmt.Println("campuses called")
-	//},
 }
 
 func init() {

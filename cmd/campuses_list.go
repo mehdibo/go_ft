@@ -18,6 +18,7 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gocarina/gocsv"
 	"github.com/mehdibo/go_ft/src/auth"
 	"github.com/mehdibo/go_ft/src/helpers"
 	"github.com/spf13/cobra"
@@ -34,6 +35,7 @@ var campusesListCmd = &cobra.Command{
 		client := auth.GetOauthClient(viper.GetViper())
 
 		resp, clientErr := client.Get(viper.GetString("api_endpoint")+"/campus")
+		// TODO: handle 429 too many requests
 		if clientErr != nil {
 			fmt.Fprintln(os.Stderr, clientErr)
 			os.Exit(1)
@@ -46,23 +48,31 @@ var campusesListCmd = &cobra.Command{
 
 		var campuses []Campus
 
-		json.Unmarshal(respBody, &campuses)
-
-		// Print keys
-		var keys []string
-		for key, _ := range CampusNormalizer(campuses[0]) {
-			keys = append(keys, key)
-		}
-		helpers.CsvWriter(keys)
-
-
-		for _, campus := range campuses {
-			var line []string
-			normalizedCampus := CampusNormalizer(campus)
-			for _, key := range keys {
-				line = append(line, normalizedCampus[key])
+		err := json.Unmarshal(respBody, &campuses)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "There was an error parsing the JSON: \n%s\n", err)
+			if len(campuses) == 0 {
+				os.Exit(1)
 			}
-			helpers.CsvWriter(line)
+			fmt.Fprintln(os.Stderr, "But continuing anyway, the JSON was parsed")
+		}
+
+		content, err := gocsv.MarshalString(campuses)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Couldn't serialize to CSV: \n%s\n", err)
+			os.Exit(1)
+		}
+
+		resultsFile, err := os.OpenFile(outputFile, os.O_CREATE|os.O_WRONLY, 0640)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Couldn't create file: \n%s\n", err)
+			os.Exit(1)
+		}
+
+		_, err = resultsFile.WriteString(content)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Couldn't write data to file: \n%s\n", err)
+			os.Exit(1)
 		}
 	},
 }

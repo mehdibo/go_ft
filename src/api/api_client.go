@@ -17,7 +17,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package api
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"github.com/mehdibo/go_ft/src/helpers"
+	"io"
 	"net/http"
 	"time"
 )
@@ -58,4 +62,26 @@ func (c *Client) Get(url string) (resp *http.Response, err error)  {
 	}
 
 	return c.do(req)
+}
+
+func (c *Client) Post(url string, contentType string, body io.Reader) (resp *http.Response, err error)  {
+	req, err := http.NewRequest("POST", c.apiEndpoint+url, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", contentType)
+
+	return c.do(req)
+}
+
+/**
+ * This method will automatically set the content type to json and Marshal the body to JSON
+ */
+func (c *Client) PostJson(url string, data interface{}) (resp *http.Response, err error) {
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		helpers.PrintfErrorExit("%s", err)
+	}
+
+	return c.Post(url, "application/json", bytes.NewReader(jsonData))
 }

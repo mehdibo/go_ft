@@ -42,10 +42,7 @@ var campusesListCmd = &cobra.Command{
 		err := json.Unmarshal(respBody, &campuses)
 		if err != nil {
 			_, _ = fmt.Fprintf(os.Stderr, "There was an error parsing the JSON: \n%s\n", err)
-			if len(campuses) == 0 {
-				os.Exit(1)
-			}
-			_, _ = fmt.Fprintln(os.Stderr, "But continuing anyway, the JSON was parsed")
+			os.Exit(1)
 		}
 
 		content, err := gocsv.MarshalString(campuses)

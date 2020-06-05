@@ -19,10 +19,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gocarina/gocsv"
-	"github.com/mehdibo/go_ft/src/auth"
 	"github.com/mehdibo/go_ft/src/helpers"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"os"
 )
 
@@ -31,11 +29,7 @@ var campusesListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all campuses and write them to a results.csv files",
 	Run: func(cmd *cobra.Command, args []string) {
-		// Create an authenticated http client
-		client := auth.GetOauthClient(viper.GetViper())
-
-		resp, clientErr := client.Get(viper.GetString("api_endpoint")+"/campus")
-		// TODO: handle 429 too many requests
+		resp, clientErr := apiClient.Get("/campus")
 		if clientErr != nil {
 			fmt.Fprintln(os.Stderr, clientErr)
 			os.Exit(1)

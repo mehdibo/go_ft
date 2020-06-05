@@ -51,17 +51,7 @@ var campusesListCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		resultsFile, err := os.OpenFile(outputFile, os.O_CREATE|os.O_WRONLY, 0640)
-		if err != nil {
-			_, _ = fmt.Fprintf(os.Stderr, "Couldn't create file: \n%s\n", err)
-			os.Exit(1)
-		}
-
-		_, err = resultsFile.WriteString(content)
-		if err != nil {
-			_, _ = fmt.Fprintf(os.Stderr, "Couldn't write data to file: \n%s\n", err)
-			os.Exit(1)
-		}
+		helpers.WriteToFile(outputFile, content)
 	},
 }
 

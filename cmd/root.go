@@ -51,7 +51,7 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "Config file (default is $HOME/.go_ft.yaml)")
-	rootCmd.PersistentFlags().StringVar(&outputFile, "file", "results", "Where to store output")
+	rootCmd.PersistentFlags().StringVar(&outputFile, "file", "results.csv", "Where to store output")
 }
 
 // initConfig reads in config file and ENV variables if set.

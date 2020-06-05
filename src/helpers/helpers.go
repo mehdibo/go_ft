@@ -37,6 +37,7 @@ func GetRespBody(resp *http.Response) []byte {
 		PrintfErrorExit("There was an error reading the response body: \n%s\n", ioErr)
 	}
 
+	// TODO: figure it out bug cause when using PrintfErrorExit with multiple params
 	if resp.StatusCode != http.StatusOK {
 		fmt.Fprintf(os.Stderr, "The API failed with status code: %d\n", resp.StatusCode)
 		fmt.Fprintf(os.Stderr, "And the following body: \n\n%s\n\n", string(respBody))
@@ -60,6 +61,11 @@ func WriteToFile(outputFile string, content string) {
 }
 
 func PrintfErrorExit(format string, a ...interface{})  {
-	_, _ = fmt.Fprintf(os.Stderr, format, a)
+	if len(a) == 0 {
+		_, _ = fmt.Fprintf(os.Stderr, format)
+	} else {
+		_, _ = fmt.Fprintf(os.Stderr, format, a)
+	}
+
 	os.Exit(1)
 }

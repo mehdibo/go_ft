@@ -34,14 +34,12 @@ func GetRespBody(resp *http.Response) []byte {
 	respBody, ioErr := ioutil.ReadAll(resp.Body)
 
 	if ioErr != nil && ioErr != io.EOF {
-		fmt.Fprintf(os.Stderr, "There was an error reading the response body")
-		fmt.Fprintln(os.Stderr, ioErr)
-		os.Exit(1)
+		PrintfErrorExit("There was an error reading the response body: \n%s\n", ioErr)
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		fmt.Fprintf(os.Stderr, "The API returned the following status code: %d\n", resp.StatusCode)
-		fmt.Fprintf(os.Stderr, "And the following body: \n%s\n", string(respBody))
+		fmt.Fprintf(os.Stderr, "The API failed with status code: %d\n", resp.StatusCode)
+		fmt.Fprintf(os.Stderr, "And the following body: \n\n%s\n\n", string(respBody))
 		os.Exit(1)
 	}
 	return respBody

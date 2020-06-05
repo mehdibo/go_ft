@@ -35,21 +35,21 @@ type Endpoint struct {
 }
 
 type Campus struct {
-	Id uint `json:"id"`
-	Name string `json:"name"`
+	Id uint
+	Name string
 	TimeZone string `json:"time_zone"`
 	Lang Language `json:"language"`
 	UsersCount uint `json:"users_count"`
 	VogsId uint `json:"vogsphere_id"`
-	Country string `json:"country"`
-	Address string `json:"address"`
-	Zip string `json:"zip"`
-	City string `json:"city"`
-	Website string `json:"website"`
-	Facebook string `json:"facebook"`
-	Twitter string `json:"twitter"`
-	Active bool `json:"active"`
-	Endpoint Endpoint `json:"endpoint"`
+	Country string
+	Address string
+	Zip string
+	City string
+	Website string
+	Facebook string
+	Twitter string
+	Active bool
+	Endpoint Endpoint
 }
 
 // campusesCmd represents the campuses command

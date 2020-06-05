@@ -41,28 +41,28 @@ var campusesListCmd = &cobra.Command{
 
 		err := json.Unmarshal(respBody, &campuses)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "There was an error parsing the JSON: \n%s\n", err)
+			_, _ = fmt.Fprintf(os.Stderr, "There was an error parsing the JSON: \n%s\n", err)
 			if len(campuses) == 0 {
 				os.Exit(1)
 			}
-			fmt.Fprintln(os.Stderr, "But continuing anyway, the JSON was parsed")
+			_, _ = fmt.Fprintln(os.Stderr, "But continuing anyway, the JSON was parsed")
 		}
 
 		content, err := gocsv.MarshalString(campuses)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Couldn't serialize to CSV: \n%s\n", err)
+			_, _ = fmt.Fprintf(os.Stderr, "Couldn't serialize to CSV: \n%s\n", err)
 			os.Exit(1)
 		}
 
 		resultsFile, err := os.OpenFile(outputFile, os.O_CREATE|os.O_WRONLY, 0640)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Couldn't create file: \n%s\n", err)
+			_, _ = fmt.Fprintf(os.Stderr, "Couldn't create file: \n%s\n", err)
 			os.Exit(1)
 		}
 
 		_, err = resultsFile.WriteString(content)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Couldn't write data to file: \n%s\n", err)
+			_, _ = fmt.Fprintf(os.Stderr, "Couldn't write data to file: \n%s\n", err)
 			os.Exit(1)
 		}
 	},

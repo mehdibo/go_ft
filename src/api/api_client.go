@@ -29,6 +29,7 @@ func (c *Client) do(req *http.Request) (*http.Response, error)  {
 		}
 		fmt.Printf("The API is complaining about too many requests, pausing for %d seconds\n", sleep)
 		time.Sleep(sleep)
+		sleep += sleep * (20/100)
 	}
 
 }

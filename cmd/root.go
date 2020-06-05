@@ -17,6 +17,8 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/mehdibo/go_ft/src/api"
+	"github.com/mehdibo/go_ft/src/auth"
 	"github.com/spf13/cobra"
 	"os"
 
@@ -26,6 +28,7 @@ import (
 
 var cfgFile string
 var outputFile string
+var apiClient *api.Client
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -96,4 +99,6 @@ func initConfig() {
 			os.Exit(1)
 		}
 	}
+
+	apiClient = api.Create(viper.GetString("api_endpoint"), auth.GetOauthClient(viper.GetViper()))
 }

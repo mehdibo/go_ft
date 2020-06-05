@@ -60,3 +60,8 @@ func WriteToFile(outputFile string, content string) {
 		os.Exit(1)
 	}
 }
+
+func PrintfErrorExit(format string, a ...interface{})  {
+	_, _ = fmt.Fprintf(os.Stderr, format, a)
+	os.Exit(1)
+}

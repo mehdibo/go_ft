@@ -29,3 +29,10 @@ go_ft is available wherever you go!
 
 
 To uninstall it, simply run `make uninstall`
+
+### Configuration
+
+You need to configure your oAuth credentials in a *.yaml* file
+If you ran `make install`, it created a `.go_ft.yaml` in your home folder.
+
+Edit that with the appropriate values

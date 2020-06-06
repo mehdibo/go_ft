@@ -38,8 +38,8 @@ type createUserReq struct {
 	User newUser  `json:"user"`
 }
 
-// createCmd represents the create command
-var createCmd = &cobra.Command{
+// usersCreateCmd represents the create command
+var usersCreateCmd = &cobra.Command{
 	Use:   "create email first_name last_name type campus",
 	Short: "Create a new user account",
 	Long: `Create a new user account
@@ -86,11 +86,11 @@ campus: the campus id where the user belongs`,
 }
 
 func init() {
-	usersCmd.AddCommand(createCmd)
+	usersCmd.AddCommand(usersCreateCmd)
 
-	// createCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// usersCreateCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// createCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// usersCreateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

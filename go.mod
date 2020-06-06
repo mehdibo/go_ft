@@ -3,6 +3,7 @@ module github.com/mehdibo/go_ft
 go 1.14
 
 require (
+	github.com/go-playground/validator/v10 v10.3.0
 	github.com/gocarina/gocsv v0.0.0-20200330101823-46266ca37bd3
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/spf13/cobra v1.0.0

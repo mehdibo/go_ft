@@ -32,6 +32,7 @@ type newUser struct {
 	LastName string `json:"last_name" validate:"required"`
 	Kind string `json:"kind" validate:"oneof=admin student external"`
 	CampusId uint64 `json:"campus_id"`
+	Login string `json:"login,omitempty"`
 }
 
 type createUserReq struct {
@@ -58,6 +59,7 @@ campus: the campus id where the user belongs`,
 				LastName: args[2],
 				Kind: args[3],
 				CampusId: campusId,
+				Login: cmd.Flag("login").Value.String(),
 			},
 		}
 		v := validator.New()
@@ -89,6 +91,7 @@ func init() {
 	usersCmd.AddCommand(usersCreateCmd)
 
 	// usersCreateCmd.PersistentFlags().String("foo", "", "A help for foo")
+	usersCreateCmd.Flags().String("login", "", "Leave empty to auto generate")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
